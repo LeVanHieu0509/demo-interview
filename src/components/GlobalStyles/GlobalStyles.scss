@@ -1,0 +1,51 @@
+@import 'normalize.css';
+
+:root {
+    --dark-green: #0a3b32;
+    --main-color: #e87722;
+
+    --black: #000;
+    --white: #fff;
+    --text-color: #0a3b32;
+    --background-gray: #dbdfe1;
+    --background-color: #dbdfe1;
+    --font-family: FWDCircularWeb, FWDCircularVietWeb, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+    color: var(--text-color);
+    overflow-y: overlay;
+}
+
+// Fonts emmbeded
+@font-face {
+    font-family: FWDCircularWeb;
+    src: url('../../assets/fonts/FWDCircularWeb-Bold.d03e103c.woff2');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: FWDCircularWeb;
+    src: url('../../assets/fonts/FWDCircularWeb-Book.d91e43e3.woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: FWDCircularWeb;
+    src: url('../../assets/fonts/FWDCircularWeb-Medium.b45786fe.woff2');
+    font-weight: 500;
+}
