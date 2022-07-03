@@ -1,13 +1,18 @@
 import styled from 'styled-components';
 
 export const DropDownContainer = styled('div')`
-    width: 236px;
+    min-width: ${(props) => (props.widthLg ? '275px' : '235px')};
     text-align: left;
     z-index: 2;
     position: relative;
     @media (max-width: 375px) {
         margin-right: 0px;
         min-width: 100%;
+        max-width: 275px;
+    }
+    @media (max-width: 800px) {
+        margin-right: 0px;
+        width: 100%;
     }
 `;
 export const DropDownListContainer = styled('div')`
@@ -20,18 +25,23 @@ export const DropDownHeader = styled('div')`
     background: #ffffff;
     border: 1px solid #ccc;
     border-radius: var(--border-radius);
-    &::before {
-        height: 10px;
-        width: 10px;
-        z-index: 100;
-        position: absolute;
-        top: 40%;
-        right: 25px;
-        content: ' ';
-        background: black;
-    }
+    display: flex;
+    justify-content: space-between;
+    // &::before {
+    //     height: 10px;
+    //     width: 10px;
+    //     z-index: 100;
+    //     position: absolute;
+    //     top: 40%;
+    //     right: 25px;
+    //     content: ' ';
+    //     background: black;
+    // }
 
     @media (max-width: 375px) {
+        margin-bottom: 14px;
+    }
+    @media (max-width: 800px) {
         margin-bottom: 14px;
     }
 `;
@@ -60,6 +70,7 @@ export const ListItem = styled('li')`
 `;
 
 export const Button = styled('button')`
+    margin-left: 40px;
     width: 139px;
     height: 44px;
     background: #e87722;
@@ -71,7 +82,18 @@ export const Button = styled('button')`
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--white);
+    &:hover {
+        cursor: pointer;
+    }
     @media (max-width: 375px) {
         width: 100%;
+        margin-left: 0px;
+    }
+    @media (max-width: 800px) {
+        width: 100%;
+        margin-left: 0px;
+    }
+    @media (max-width: 1000px) {
+        margin-bottom: 30px;
     }
 `;

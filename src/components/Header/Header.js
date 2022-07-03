@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BookIcon, UpIcon } from '../Icon/Icon';
+import { BookIcon, SmallShapeIcon, TimeIcon, UpIcon } from '../Icon/Icon';
 import {
     Title,
     Icon,
@@ -21,6 +21,9 @@ const HeaderWrapper = styled.div`
     @media (max-width: 375px) {
         padding: 0;
     }
+    @media (max-width: 800px) {
+        padding: 0;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -34,6 +37,7 @@ const Wrapper = styled.div`
     }
     @media (max-width: 1000px) {
         display: flex;
+
         flex-direction: column;
     }
 `;
@@ -44,6 +48,7 @@ const WrapperLeft = styled.div`
     @media (max-width: 800px) {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
     @media (max-width: 375px) {
         width: 100%;
@@ -57,8 +62,22 @@ const WrraperItem = styled.div`
         margin-right: 0px;
         min-width: 100%;
     }
+    @media (max-width: 800px) {
+        margin-right: 0px;
+        min-width: 100%;
+    }
 `;
 const WrapperRight = styled.div`
+    margin-top: 10px;
+    @media (max-width: 375px) {
+    }
+`;
+const UpBoxIcon = styled.span`
+    @media (max-width: 375px) {
+    }
+`;
+const BookBoxIcon = styled.span`
+    margin-left: 28.5px;
     @media (max-width: 375px) {
     }
 `;
@@ -75,7 +94,7 @@ export default function Header() {
                         <DropDownContainer>
                             <DropDownHeader>
                                 <Title>Tất cả các quý</Title>
-                                <Icon></Icon>
+                                <SmallShapeIcon />
                             </DropDownHeader>
                             {isOpen && (
                                 <DropDownListContainer>
@@ -92,10 +111,10 @@ export default function Header() {
                     </WrraperItem>
 
                     <WrraperItem>
-                        <DropDownContainer>
+                        <DropDownContainer widthLg>
                             <DropDownHeader>
                                 <Title>01/07/2020 - 10/08/2020</Title>
-                                <Icon></Icon>
+                                <TimeIcon />
                             </DropDownHeader>
                             {isTimeDay && (
                                 <DropDownListContainer>
@@ -114,8 +133,12 @@ export default function Header() {
                     <Button>Tra Cứu</Button>
                 </WrapperLeft>
                 <WrapperRight>
-                    <UpIcon />
-                    <BookIcon />
+                    <UpBoxIcon>
+                        <UpIcon />
+                    </UpBoxIcon>
+                    <BookBoxIcon>
+                        <BookIcon />
+                    </BookBoxIcon>
                 </WrapperRight>
             </Wrapper>
         </HeaderWrapper>

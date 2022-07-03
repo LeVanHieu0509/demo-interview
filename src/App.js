@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import Header from './components/Header/Header';
 
 import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChartActions, SelectDataRandomize } from '~/components/ChartSlice';
+import Utils from './Utils';
+import { useEffect, useState } from 'react';
 //import GlobalStyled from './components/GlobalStyled/GlobalStyled';
 
 const Wrapper = styled.div`
     text-align: center;
 
     @media (max-width: 375px) {
+        padding: 0 20px;
+    }
+    @media (max-width: 800px) {
         padding: 0 20px;
     }
 `;
@@ -51,23 +58,153 @@ const P = styled.p`
 const WrapperContent = styled.div`
     border-radius: var(--border-radius);
     max-width: 1080px;
-    height: 500px;
+
     margin: auto;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     background-color: var(--background-color);
-    @media (max-width: 375px) {
-        //background-color: var(--white);
+    @media (max-width: 800px) {
+        background-color: var(--white);
     }
 `;
 const Content = styled.div`
-    margin: 40px 40px 20px 40px;
+    margin: 40px;
+    @media (max-width: 800px) {
+        margin: 0px;
+    }
     @media (max-width: 375px) {
-        margin: 0;
+        margin: 0px;
+    }
+`;
+const WrraperButton = styled.div`
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+    @media (max-width: 375px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 800px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+`;
+export const Button = styled('button')`
+    width: 139px;
+    height: 44px;
+    background: #e87722;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+
+    &:hover {
+        cursor: pointer;
+    }
+    @media (max-width: 375px) {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    @media (max-width: 800px) {
+        width: 100%;
+        margin-bottom: 10px;
     }
 `;
 
+const DATA_COUNT = 5;
+const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
+const labels = Utils.months({ count: 5 });
+const data = {
+    labels: labels,
+    datasets: [
+        {
+            label: 'Dataset 1',
+            data: Utils.numbers(NUMBER_CFG),
+            borderColor: '#E87722',
+            backgroundColor: '#E87722',
+        },
+        {
+            label: 'Dataset 2',
+            data: Utils.numbers(NUMBER_CFG),
+            borderColor: '#6ECEB2',
+            backgroundColor: '#6ECEB2',
+        },
+    ],
+};
 function App() {
+    const [dataRandomize, setDataRandomize] = useState(data);
+
+    // const dataRandomize = useSelector(SelectDataRandomize);
+    // console.log(dataRandomize);
+    const dispatch = useDispatch();
+
+    const handleRandommize = (dataRandomize) => {
+        let newData = { ...dataRandomize };
+
+        let newOK = newData.datasets.map((dataset) => {
+            dataset.data = Utils.numbers({ count: newData.labels.length, min: -100, max: 100 });
+            return dataset;
+        });
+        newData.datasets = newOK;
+        setDataRandomize(newData);
+        //dispatch(ChartActions.Randomize(newData));
+    };
+
+    const handleAddDataSet = (dataRandomize) => {
+        let dataSet = { ...dataRandomize };
+        const dsColor = Utils.namedColor(dataSet.datasets.length);
+        const newDataset = {
+            label: 'Dataset ' + (dataSet.datasets.length + 1),
+            backgroundColor: Utils.transparentize(dsColor, 0.5),
+            borderColor: dsColor,
+            data: Utils.numbers({ count: dataSet.labels.length, min: -100, max: 100 }),
+        };
+
+        setDataRandomize({ ...dataSet, datasets: [...dataSet.datasets, newDataset] });
+    };
+
+    const handleRemoveDataSet = (dataRandomize) => {
+        let newData = { ...dataRandomize };
+        let distroyData = newData.datasets.pop();
+
+        let arrayFilter = dataRandomize.datasets.filter((data) => data.datasets !== distroyData);
+        setDataRandomize({ ...newData, datasets: arrayFilter });
+    };
+
+    const handleAddData = (dataAddData) => {
+        let addData = { ...dataAddData };
+        if (addData.datasets.length > 0) {
+            addData.labels = Utils.months({ count: addData.labels.length + 1 });
+        }
+
+        for (let index = 0; index < addData.datasets.length; ++index) {
+            addData.datasets[index].data.push(Utils.rand(-100, 100));
+        }
+
+        setDataRandomize({ ...addData });
+    };
+
+    const handleRemoveData = (dataRandomize) => {
+        let newData = { ...dataRandomize };
+
+        newData.labels.splice(-1, 1);
+
+        const a = dataRandomize.datasets.map((dataset) => {
+            return dataset.data.pop();
+        });
+        let b = newData.datasets.filter((data) => data.data.filter((data) => data !== a.map((a) => a)));
+
+        setDataRandomize({ ...newData, datasets: b });
+    };
+
     return (
         <div className="App">
             <Wrapper>
@@ -83,9 +220,16 @@ function App() {
                 <WrapperContent>
                     <Content>
                         <Header />
-                        <Chart />
+                        <Chart data={dataRandomize} />
                     </Content>
                 </WrapperContent>
+                <WrraperButton>
+                    <Button onClick={() => handleRandommize(dataRandomize)}>Randomize</Button>
+                    <Button onClick={() => handleAddDataSet(dataRandomize)}> Add Dataset</Button>
+                    <Button onClick={() => handleAddData(dataRandomize)}>Add Data</Button>
+                    <Button onClick={() => handleRemoveDataSet(dataRandomize)}>Remove Dataset</Button>
+                    <Button onClick={() => handleRemoveData(dataRandomize)}>Remove Data</Button>
+                </WrraperButton>
             </Wrapper>
         </div>
     );
