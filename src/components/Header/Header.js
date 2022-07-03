@@ -93,7 +93,7 @@ export default function Header() {
                     <WrraperItem>
                         <DropDownContainer>
                             <DropDownHeader>
-                                <Title>Tất cả các quý</Title>
+                                <Title>Tất cả các quỹ</Title>
                                 <SmallShapeIcon />
                             </DropDownHeader>
                             {isOpen && (
