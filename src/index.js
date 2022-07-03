@@ -5,12 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
+import { Provider } from 'react-redux';
+import store from './app/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <GlobalStyles>
             <ThemeProvider theme={{ fontFamily: 'Helvetica Neue' }}>
-                <App />
+                <Provider store={store}>
+                    <App />
+                </Provider>
             </ThemeProvider>
         </GlobalStyles>
     </React.StrictMode>,
