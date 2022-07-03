@@ -242,7 +242,7 @@ function App() {
                                 <>
                                     {desPhone}{' '}
                                     <span className="more" ref={moreRef}>
-                                        Xem Thêm
+                                        Xem thêm
                                     </span>
                                 </>
                             ) : (
