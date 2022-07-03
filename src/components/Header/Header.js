@@ -18,7 +18,7 @@ const HeaderWrapper = styled.div`
     padding: 12px 24px 12px 24px;
     border-radius: var(--border-radius);
 
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         padding: 0;
     }
     @media (max-width: 800px) {
@@ -31,7 +31,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         display: flex;
         flex-direction: column;
     }
@@ -50,7 +50,7 @@ const WrapperLeft = styled.div`
         flex-direction: column;
         width: 100%;
     }
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         width: 100%;
     }
 `;
@@ -58,7 +58,7 @@ const WrapperLeft = styled.div`
 const WrraperItem = styled.div`
     margin-right: 24px;
     max-width: 236px;
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         margin-right: 0px;
         min-width: 100%;
     }

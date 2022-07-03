@@ -5,7 +5,7 @@ export const DropDownContainer = styled('div')`
     text-align: left;
     z-index: 2;
     position: relative;
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         margin-right: 0px;
         min-width: 100%;
         max-width: 275px;
@@ -38,7 +38,7 @@ export const DropDownHeader = styled('div')`
     //     background: black;
     // }
 
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         margin-bottom: 14px;
     }
     @media (max-width: 800px) {
@@ -48,7 +48,7 @@ export const DropDownHeader = styled('div')`
 
 export const Title = styled('span')`
     color: var(--main-color);
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     font-weight: 400;
     line-height: 24px;
 `;
@@ -94,6 +94,6 @@ export const Button = styled('button')`
         margin-left: 0px;
     }
     @media (max-width: 1000px) {
-        margin-bottom: 30px;
+        margin-bottom: 14px;
     }
 `;
