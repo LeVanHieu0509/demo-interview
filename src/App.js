@@ -1,13 +1,10 @@
-import Chart from '~/components/Chart';
 import styled from 'styled-components';
+import Chart from '~/components/Chart';
 import Header from './components/Header/Header';
 
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { ChartActions, SelectDataRandomize } from '~/components/ChartSlice';
 import Utils from './Utils';
-import { useEffect, useState } from 'react';
-//import GlobalStyled from './components/GlobalStyled/GlobalStyled';
 
 const Wrapper = styled.div`
     text-align: center;
@@ -46,13 +43,21 @@ const P = styled.p`
     width: 100%;
     font-size: 1.6rem;
     text-align: center;
-    padding: 0px 10% 30px 10%;
+    padding: 0px 11% 30px 11%;
     line-height: 24px;
-
-    @media (max-width: 375px) {
+    font-weight:400;
+    @media (max-width: 450px) {
+    
       margin-top: 15px;    
       padding: 0; 
       margin-bottom:24px;
+      height: 74px;
+      overflow: hidden;
+    }
+    @media (max-width: 800px) {
+        margin-top: 15px;    
+        padding: 0; 
+        margin-bottom:24px;
 `;
 
 const WrapperContent = styled.div`
@@ -119,6 +124,7 @@ export const Button = styled('button')`
     }
 `;
 
+//Data charts
 const DATA_COUNT = 5;
 const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
 const labels = Utils.months({ count: 5 });
@@ -144,7 +150,7 @@ function App() {
 
     // const dataRandomize = useSelector(SelectDataRandomize);
     // console.log(dataRandomize);
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const handleRandommize = (dataRandomize) => {
         let newData = { ...dataRandomize };
@@ -163,11 +169,10 @@ function App() {
         const dsColor = Utils.namedColor(dataSet.datasets.length);
         const newDataset = {
             label: 'Dataset ' + (dataSet.datasets.length + 1),
-            backgroundColor: Utils.transparentize(dsColor, 0.5),
+            backgroundColor: dsColor,
             borderColor: dsColor,
             data: Utils.numbers({ count: dataSet.labels.length, min: -100, max: 100 }),
         };
-
         setDataRandomize({ ...dataSet, datasets: [...dataSet.datasets, newDataset] });
     };
 
@@ -205,6 +210,24 @@ function App() {
         setDataRandomize({ ...newData, datasets: b });
     };
 
+    const desRef = useRef(null);
+    const moreRef = useRef(null);
+    const [desPhone, setDesPhone] = useState('');
+
+    //handle string des home when screen < 450px
+    useEffect(() => {
+        let subStr = desRef.current.innerText;
+        let string = subStr.slice(0, 121) + '...';
+        let string360px = subStr.slice(0, 117) + '...';
+
+        if (window.screen.width < 450) {
+            setDesPhone(string);
+        }
+        if (window.screen.width <= 360) {
+            setDesPhone(string360px);
+        }
+    }, []);
+
     return (
         <div className="App">
             <Wrapper>
@@ -212,8 +235,21 @@ function App() {
                     <Title>Tra Cứu Giá Đơn Vị</Title>
                     {/* <GlobalStyled black /> */}
                     <P>
-                        Nhằm cung cấp cho bạn đầy đủ thông tin về giá trị quỹ trong cả hiện tại và quá khứ, bạn có thể
-                        tùy chọn thời điểm tra cứu theo khung thời gian bạn muốn
+                        <span ref={desRef}>
+                            {desPhone ? (
+                                <>
+                                    {desPhone}{' '}
+                                    <span className="more" ref={moreRef}>
+                                        Xem Thêm
+                                    </span>
+                                </>
+                            ) : (
+                                <>
+                                    Nhằm cung cấp cho bạn đầy đủ thông tin về giá trị quỹ trong cả hiện tại và quá khứ,
+                                    bạn có thể tùy chọn thời điểm tra cứu theo khung thời gian bạn muốn
+                                </>
+                            )}
+                        </span>
                     </P>
                 </HeaderBox>
 
