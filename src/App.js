@@ -19,9 +19,10 @@ const Wrapper = styled.div`
 const HeaderBox = styled.div`
     max-width: 1080px;
     margin: auto;
-    margin-top: 63px;
+    margin-top: 75px;
     background: var(--white);
-    @media (max-width: 375px) {
+    @media (max-width: 450px) {
+        margin-top: 63px;
     }
 `;
 const Title = styled.h1`
@@ -33,12 +34,13 @@ const Title = styled.h1`
     color: var(--main-color);
     line-height: 30px;
     text-transform: uppercase;
-    @media (max-width: 375px) {
+    @media (max-width: 450px) {
         font-size: 2rem;
         line-height: 28px;
     }
 `;
 const P = styled.p`
+    color:var(--dark-green);
     margin-top: 18px;
     width: 100%;
     font-size: 1.6rem;
@@ -78,7 +80,7 @@ const Content = styled.div`
     @media (max-width: 800px) {
         margin: 0px;
     }
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         margin: 0px;
     }
 `;
@@ -88,7 +90,7 @@ const WrraperButton = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 30px;
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -114,7 +116,7 @@ export const Button = styled('button')`
     &:hover {
         cursor: pointer;
     }
-    @media (max-width: 375px) {
+    @media (max-width: 376px) {
         width: 100%;
         margin-bottom: 10px;
     }
