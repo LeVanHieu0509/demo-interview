@@ -7,12 +7,14 @@ import GlobalStyles from '~/components/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import Test from './test';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <GlobalStyles>
             <ThemeProvider theme={{ fontFamily: 'Helvetica Neue' }}>
                 <Provider store={store}>
+                    <Test />
                     <App />
                 </Provider>
             </ThemeProvider>

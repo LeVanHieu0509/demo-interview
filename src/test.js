@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Utils from './Utils';
+import moment from 'moment';
 
 const Wrapper = styled.div`
     text-align: center;
@@ -128,67 +129,72 @@ export const Button = styled('button')`
 
 //Data charts
 const DATA_COUNT = 5;
-const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };
-const labels = Utils.months({ count: 5 });
-const dataPoints = [
-    { x: new Date(2017, 6, 1), y: 0.9 },
-    { x: new Date(2017, 6, 2), y: 0.92 },
-    { x: new Date(2017, 6, 3), y: 0.94 },
-    { x: new Date(2017, 6, 4), y: 0.94 },
-    { x: new Date(2017, 6, 5), y: 0.96 },
-    { x: new Date(2017, 6, 6), y: 0.98 },
-    { x: new Date(2017, 6, 7), y: 1.0 },
-    { x: new Date(2017, 6, 8), y: 0.9 },
-    { x: new Date(2017, 6, 9), y: 0.92 },
-    { x: new Date(2017, 6, 10), y: 0.94 },
-    { x: new Date(2017, 6, 11), y: 0.94 },
-    { x: new Date(2017, 6, 12), y: 0.96 },
-    { x: new Date(2017, 6, 13), y: 0.98 },
-    { x: new Date(2017, 6, 14), y: 1.0 },
-    { x: new Date(2017, 6, 15), y: 1.0 },
-    { x: new Date(2017, 6, 16), y: 1.0 },
-    { x: new Date(2017, 6, 17), y: 0.98 },
-    { x: new Date(2017, 6, 18), y: 1.0 },
-    { x: new Date(2017, 6, 19), y: 1.0 },
-    { x: new Date(2017, 6, 20), y: 0.98 },
-    { x: new Date(2017, 6, 21), y: 1.0 },
-    { x: new Date(2017, 6, 22), y: 0.92 },
-    { x: new Date(2017, 6, 23), y: 0.92 },
-    { x: new Date(2017, 6, 24), y: 1.0 },
-    { x: new Date(2017, 6, 25), y: 0.98 },
-    { x: new Date(2017, 6, 26), y: 1.0 },
-    { x: new Date(2017, 6, 27), y: 1.0 },
-    { x: new Date(2017, 6, 28), y: 1.0 },
-    { x: new Date(2017, 6, 29), y: 0.98 },
-    { x: new Date(2017, 6, 30), y: 1.0 },
-    { x: new Date(2017, 6, 31), y: 0.92 },
-    { x: new Date(2017, 7, 1), y: 1.0 },
-    { x: new Date(2017, 7, 2), y: 0.92 },
-    { x: new Date(2017, 7, 3), y: 1.0 },
-    { x: new Date(2017, 7, 4), y: 0.98 },
-    { x: new Date(2017, 7, 5), y: 0.98 },
-    { x: new Date(2017, 7, 6), y: 1.0 },
-    { x: new Date(2017, 7, 7), y: 0.92 },
-    { x: new Date(2017, 7, 8), y: 0.98 },
-    { x: new Date(2017, 7, 9), y: 0.98 },
-    { x: new Date(2017, 7, 10), y: 0.91 },
-];
-const option = {
-    plugins: {
-        title: {
-            display: true,
-        },
-        legend: {
-            display: true,
-            position: 'top',
-        },
-        scale: {
-            x: {
-                maxTicksLimit: 10,
+const NUMBER_CFG = { count: DATA_COUNT, min: 0.9, max: 1.0, decimals: 8 };
+let labels = [];
+
+for (let i = 0; i < DATA_COUNT; ++i) {
+    labels.push(moment(Utils.newDate(i)).format('DD/MM'));
+}
+
+let dateMax = moment(labels[labels.length]).format('DD/MM');
+let dateMin = moment(labels[0], 'DD/MMM').format('DD/MM');
+console.log(dateMax, dateMin);
+
+let options = {
+    legend: {
+        display: true,
+        align: 'end',
+        textAlign: 'right',
+    },
+    scales: {
+        y: {
+            max: 1.0,
+            min: 0.9,
+            ticks: {
+                stepSize: 0.02,
             },
         },
     },
 };
+// const options = {
+//     responsive: true,
+//     plugins: {
+//         title: {
+//             display: true,
+//         },
+//         legend: {
+//             display: true,
+//             position: 'top',
+//         },
+//         scales: {
+//             y: {
+//                 title: {
+//                     display: true,
+//                     text: 'Value',
+//                 },
+
+//                 min: 0,
+//                 max: 10,
+//                 ticks: {
+//                     // forces step size to be 50 units
+//                     stepSize: 4,
+//                 },
+//             },
+// x: {
+//     type: 'time',
+//     display: true,
+//     offset: true,
+//     time: {
+//         unit: 'day',
+//     },
+//     // ticks: {
+//     //     // forces step size to be 50 units
+//     //     stepSize: moment(Utils.newDate(10)).format('DD/MM'),
+//     // },
+// },
+//         },
+//     },
+// };
 const data = {
     labels: labels,
     datasets: [
@@ -199,15 +205,15 @@ const data = {
             backgroundColor: '#E87722',
         },
         {
-            label: 'Quý 2',
             data: Utils.numbers(NUMBER_CFG),
+            label: 'Quý 2',
             borderColor: '#6ECEB2',
             backgroundColor: '#6ECEB2',
         },
     ],
 };
 
-function App() {
+function Test() {
     const [dataRandomize, setDataRandomize] = useState(data);
 
     // const dataRandomize = useSelector(SelectDataRandomize);
@@ -218,7 +224,7 @@ function App() {
         let newData = { ...dataRandomize };
 
         let newOK = newData.datasets.map((dataset) => {
-            dataset.data = Utils.numbers({ count: newData.labels.length, min: -100, max: 100 });
+            dataset.data = Utils.numbers({ count: newData.labels.length, min: 0.9, max: 1.0 });
             return dataset;
         });
         newData.datasets = newOK;
@@ -229,47 +235,64 @@ function App() {
     const handleAddDataSet = (dataRandomize) => {
         let dataSet = { ...dataRandomize };
         const dsColor = Utils.namedColor(dataSet.datasets.length);
+
         const newDataset = {
             label: 'Quý ' + (dataSet.datasets.length + 1),
             backgroundColor: dsColor,
             borderColor: dsColor,
-            data: Utils.numbers({ count: dataSet.labels.length, min: -100, max: 100 }),
+            data: Utils.numbers({ count: dataSet.labels.length, min: 0.9, max: 1.0 }),
         };
         setDataRandomize({ ...dataSet, datasets: [...dataSet.datasets, newDataset] });
     };
 
     const handleRemoveDataSet = (dataRandomize) => {
         let newData = { ...dataRandomize };
-        let distroyData = newData.datasets.pop();
-
-        let arrayFilter = dataRandomize.datasets.filter((data) => data.datasets !== distroyData);
-        setDataRandomize({ ...newData, datasets: arrayFilter });
+        if (newData.datasets.length > 0) {
+            let distroyData = newData.datasets.pop();
+            let arrayFilter = dataRandomize.datasets.filter((data) => data.datasets !== distroyData);
+            setDataRandomize({ ...newData, datasets: arrayFilter });
+        }
     };
 
     const handleAddData = (dataAddData) => {
         let addData = { ...dataAddData };
-        if (addData.datasets.length > 0) {
-            addData.labels = Utils.months({ count: addData.labels.length + 1 });
+        let dem = 1;
+
+        var new_date;
+        for (let i = 1; i <= 10; ++i) {
+            if (addData.labels.length === 0) {
+                new_date = '01/07';
+            } else {
+                new_date = moment(labels[labels.length - 1], 'DD/MM')
+                    .add(dem, 'days')
+                    .format('DD/MM');
+            }
+            if (addData.datasets.length > 0) {
+                addData.labels.push(new_date);
+            }
+            for (let index = 0; index < addData.datasets.length; ++index) {
+                addData.datasets[index].data.push(Utils.rand(0.9, 1.0));
+            }
         }
 
-        for (let index = 0; index < addData.datasets.length; ++index) {
-            addData.datasets[index].data.push(Utils.rand(-100, 100));
-        }
+        let arrs = addData.datasets.map((arr) => arr);
+        console.log(addData);
 
-        setDataRandomize({ ...addData });
+        setDataRandomize({ ...addData, datasets: arrs });
     };
 
     const handleRemoveData = (dataRandomize) => {
         let newData = { ...dataRandomize };
+        let b;
 
-        newData.labels.splice(-1, 1);
-
-        const a = dataRandomize.datasets.map((dataset) => {
-            return dataset.data.pop();
-        });
-        let b = newData.datasets.filter((data) => data.data.filter((data) => data !== a.map((a) => a)));
-
-        setDataRandomize({ ...newData, datasets: b });
+        for (var i = 0; i < 10; ++i) {
+            newData.labels.splice(-1, 1);
+            const a = dataRandomize.datasets.map((dataset) => {
+                return dataset.data.pop();
+            });
+            b = newData.datasets.filter((data) => data.data.filter((data) => data !== a.map((a) => a)));
+            setDataRandomize({ ...newData, datasets: b });
+        }
     };
 
     const desRef = useRef(null);
@@ -318,7 +341,7 @@ function App() {
                 <WrapperContent>
                     <Content>
                         <Header />
-                        <Chart data={dataRandomize} options={option} />
+                        <Chart data={dataRandomize} options={options} />
                     </Content>
                 </WrapperContent>
                 <WrraperButton>
@@ -333,4 +356,4 @@ function App() {
     );
 }
 
-export default App;
+export default Test;
