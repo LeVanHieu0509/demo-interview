@@ -1,7 +1,6 @@
 @import 'normalize.css';
 
 :root {
-    --dark-green: #0a3b32;
     --main-color: #e87722;
 
     --black: #000;
@@ -131,4 +130,11 @@ canvas {
 .more {
     color: var(--main-color);
     cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    .chartBox {
+        min-height: 300px;
+        width: 100%;
+    }
 }
