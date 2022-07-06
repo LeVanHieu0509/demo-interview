@@ -128,94 +128,189 @@ export const Button = styled('button')`
 `;
 
 //Data charts
-const DATA_COUNT = 5;
+const DATA_COUNT = 40;
 const NUMBER_CFG = { count: DATA_COUNT, min: 0.9, max: 1.0, decimals: 8 };
 let labels = [];
 
 for (let i = 0; i < DATA_COUNT; ++i) {
     labels.push(moment(Utils.newDate(i)).format('DD/MM'));
+    if (i === 0) {
+    }
 }
 
-let dateMax = moment(labels[labels.length]).format('DD/MM');
+let dateMax = moment(labels[labels.length - 1], 'DD/MM')
+    .add(1, 'days')
+    .format('DD/MM');
 let dateMin = moment(labels[0], 'DD/MMM').format('DD/MM');
-console.log(dateMax, dateMin);
+let dateStep = moment(labels[9], 'DD').format('DD');
 
-let options = {
-    legend: {
-        display: true,
-        align: 'end',
-        textAlign: 'right',
-    },
-    scales: {
-        y: {
-            max: 1.0,
-            min: 0.9,
-            ticks: {
-                stepSize: 0.02,
-            },
-        },
-    },
-};
-// const options = {
-//     responsive: true,
-//     plugins: {
-//         title: {
-//             display: true,
-//         },
-//         legend: {
-//             display: true,
-//             position: 'top',
-//         },
-//         scales: {
-//             y: {
-//                 title: {
-//                     display: true,
-//                     text: 'Value',
-//                 },
-
-//                 min: 0,
-//                 max: 10,
-//                 ticks: {
-//                     // forces step size to be 50 units
-//                     stepSize: 4,
-//                 },
-//             },
-// x: {
-//     type: 'time',
-//     display: true,
-//     offset: true,
-//     time: {
-//         unit: 'day',
-//     },
-//     // ticks: {
-//     //     // forces step size to be 50 units
-//     //     stepSize: moment(Utils.newDate(10)).format('DD/MM'),
-//     // },
-// },
-//         },
-//     },
-// };
 const data = {
     labels: labels,
     datasets: [
         {
-            label: 'Quý 1',
+            label: 'Qũy A',
             data: Utils.numbers(NUMBER_CFG),
             borderColor: '#E87722',
             backgroundColor: '#E87722',
         },
-        {
-            data: Utils.numbers(NUMBER_CFG),
-            label: 'Quý 2',
-            borderColor: '#6ECEB2',
-            backgroundColor: '#6ECEB2',
-        },
+        // {
+        //     data: Utils.numbers(NUMBER_CFG),
+        //     label: 'Qũy B',
+        //     borderColor: '#6ECEB2',
+        //     backgroundColor: '#6ECEB2',
+        // },
     ],
 };
 
 function Test() {
     const [dataRandomize, setDataRandomize] = useState(data);
+    const [legendPossition, setLegendPossition] = useState('top');
+    const [legendAlign, setLegendAlign] = useState('end');
+    const [legendReverse, setLegendReverse] = useState(false);
+    const [paddingTick, setPaddingTick] = useState(15);
+    const [tickMax, setTickMax] = useState(1.02);
+    console.log(dateMax, dateStep);
+    let options = {
+        spanGaps: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function (context) {
+                        return `Ngày: ${context[0].label}/2020`;
+                    },
+                },
 
+                // backgroundColor: 'black',
+                mode: 'nearest',
+                boxPadding: 0,
+                boxWidth: 0,
+                boxHeight: 0,
+                titleColor: '#0A3B32',
+                titleFont: {
+                    size: 16,
+                    family: 'FWDCircularWeb',
+                },
+                titleSpacing: 5,
+                titleMarginBottom: 10,
+                titleAlign: 'center',
+
+                padding: 10,
+                backgroundColor: '#fff',
+                bodyColor: '#0A3B32',
+                borderColor: '#E87722',
+                borderWidth: 1,
+                bodyFont: {
+                    size: 16,
+                    family: 'FWDCircularWeb',
+                },
+
+                bodyAlign: 'center',
+                xAlign: 'none',
+                yAlign: 'none',
+            },
+            legend: {
+                maxHeight: 85,
+                textDirection: 'ltr',
+                reverse: legendReverse,
+                align: legendAlign,
+                position: legendPossition,
+                labels: {
+                    boxWidth: 14,
+                    boxHeight: 14,
+                    color: 'var(--dark-green)',
+                    padding: 25,
+                    font: {
+                        family: 'FWDCircularWeb',
+                        size: '16px',
+                        weight: 400,
+                        lineHeight: '22px',
+                    },
+                },
+            },
+        },
+        scales: {
+            responsive: true,
+            maintainAspectRatio: true,
+            x: {
+                grid: {
+                    borderColor: 'rgba(0, 0, 0, 0.4)',
+                    borderWidth: 1,
+                    color: 'rgba(0, 0, 0,0.1)',
+                    tickLength: 10,
+                    lineWidth: 1,
+                    tickWidth: 1,
+
+                    tickColor: 'rgba(0, 0, 0, 0.4)',
+                },
+
+                ticks: {
+                    padding: 20,
+                    maxRotation: 0,
+                    crossAlign: 'top',
+                    maxTicksLimit: 4,
+                    alignToPixels: true,
+                    color: 'var(--dark-green)',
+                    font: {
+                        size: 16,
+                        family: 'FWDCircularWeb',
+                    },
+                },
+            },
+            y: {
+                grid: {
+                    borderWidth: 1,
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    tickLength: 0,
+                    lineWidth: 1,
+                    tickWidth: 1,
+                    borderColor: 'rgba(0, 0, 0, 0.4)',
+                },
+                max: tickMax,
+                min: 0.9,
+                ticks: {
+                    crossAlign: 'far',
+                    color: 'var(--dark-green)',
+                    stepSize: 0.02,
+                    font: {
+                        size: 16,
+                        family: 'FWDCircularWeb',
+                    },
+                    padding: paddingTick,
+                },
+            },
+            y2: {
+                position: 'right',
+                grid: {
+                    borderWidth: 1,
+                    borderColor: 'rgba(0, 0, 0, 0.4)',
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    tickLength: 0,
+                    lineWidth: 1,
+                    tickWidth: 1,
+                    tickColor: 'rgba(0, 0, 0, 0.4)',
+                },
+                max: tickMax,
+                min: 0.9,
+                ticks: {
+                    stepSize: 0.02,
+                    display: false,
+                },
+            },
+        },
+        elements: {
+            line: {
+                borderWidth: 2,
+                color: '#fff',
+            },
+            point: {
+                radius: 3,
+                pointStyle: 'cricle',
+                hoverRadius: 8,
+                hitRadius: 3,
+            },
+        },
+    };
     // const dataRandomize = useSelector(SelectDataRandomize);
     // console.log(dataRandomize);
     //const dispatch = useDispatch();
@@ -235,9 +330,63 @@ function Test() {
     const handleAddDataSet = (dataRandomize) => {
         let dataSet = { ...dataRandomize };
         const dsColor = Utils.namedColor(dataSet.datasets.length);
+        let character = [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+        ];
 
         const newDataset = {
-            label: 'Quý ' + (dataSet.datasets.length + 1),
+            label: 'Qũy ' + character[dataSet.datasets.length],
             backgroundColor: dsColor,
             borderColor: dsColor,
             data: Utils.numbers({ count: dataSet.labels.length, min: 0.9, max: 1.0 }),
@@ -276,7 +425,6 @@ function Test() {
         }
 
         let arrs = addData.datasets.map((arr) => arr);
-        console.log(addData);
 
         setDataRandomize({ ...addData, datasets: arrs });
     };
@@ -307,6 +455,11 @@ function Test() {
 
         if (window.screen.width < 450) {
             setDesPhone(string);
+            setLegendAlign('start');
+            setLegendPossition('bottom');
+            setLegendReverse(false);
+            setPaddingTick(5);
+            setTickMax(1.0);
         }
         if (window.screen.width <= 360) {
             setDesPhone(string360px);
