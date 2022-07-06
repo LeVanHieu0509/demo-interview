@@ -87,10 +87,40 @@ const MONTHS = [
     'November',
     'December',
 ];
+const DAYS = [
+    new Date(2017, 6, 1),
+    new Date(2017, 6, 2),
+    new Date(2017, 6, 3),
+    new Date(2017, 6, 4),
+    new Date(2017, 6, 5),
+    new Date(2017, 6, 6),
+    new Date(2017, 6, 7),
+    new Date(2017, 6, 8),
+    new Date(2017, 6, 9),
+    new Date(2017, 6, 10),
+    new Date(2017, 6, 11),
+    new Date(2017, 6, 12),
+    new Date(2017, 6, 13),
+];
 
 export function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
+    var section = cfg.section;
+    var values = [];
+    var i, value;
+
+    for (i = 0; i < count; ++i) {
+        value = MONTHS[Math.ceil(i) % 12];
+        values.push(value.substring(0, section));
+    }
+
+    return values;
+}
+
+export function day(config) {
+    var cfg = config || {};
+    var count = cfg.count || 30;
     var section = cfg.section;
     var values = [];
     var i, value;
@@ -139,7 +169,7 @@ export function namedColor(index) {
 }
 
 export function newDate(days) {
-    return DateTime.now().plus({ days }).toJSDate();
+    return DateTime.local(2020, 7, 1).plus({ days }).toJSDate();
 }
 
 export function newDateString(days) {

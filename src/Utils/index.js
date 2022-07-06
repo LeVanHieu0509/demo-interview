@@ -1,4 +1,4 @@
-import { labels, rand, months, color, namedColor, numbers, CHART_COLORS, transparentize } from './Utils';
+import { labels, newDate, rand, months, color, namedColor, numbers, CHART_COLORS, transparentize } from './Utils';
 
 const Utils = {
     labels,
@@ -9,6 +9,7 @@ const Utils = {
     rand,
     CHART_COLORS,
     transparentize,
+    newDate,
 };
 
 export default Utils;

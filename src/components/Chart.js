@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Utils from '~/Utils';
 //import Utils from '~/Utils';
 import BarChart from './BarChart';
+
+import Canvas from './Canvas';
 import LineChart from './LineChart';
 const HeaderWrapper = styled.div`
     margin-top: 20px;
@@ -14,12 +16,12 @@ const HeaderWrapper = styled.div`
     }
 `;
 
-export default function Chart({ data }) {
+export default function Chart({ options, data }) {
     useEffect(() => {}, [data]);
     return (
         <HeaderWrapper>
             <div style={{ width: '100%' }}>
-                <LineChart chartData={data} />
+                <LineChart options={options} chartData={data} />
             </div>
         </HeaderWrapper>
     );
